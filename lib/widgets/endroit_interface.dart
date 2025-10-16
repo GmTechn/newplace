@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/modele/endroit.dart';
 import 'package:flutter_application_3/providers/endroit_utilisateurs.dart';
 import 'package:flutter_application_3/vue/ajout_endroit.dart';
 import 'package:flutter_application_3/widgets/endroits_list.dart';

@@ -37,7 +37,9 @@ class _AjoutEndroitState extends ConsumerState<AjoutEndroit> {
     }
 
     //add place to provider
-    ref.read(endroitsprovider.notifier).ajoutendroit(place, description);
+    ref
+        .read(endroitsprovider.notifier)
+        .ajoutendroit(place, description, _imageSelected);
 
     //pop of context, go back to the display list
     Navigator.pop(context);
