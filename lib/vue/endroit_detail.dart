@@ -12,7 +12,13 @@ class EndroitDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(endroit.nom)),
+      appBar: AppBar(
+        title: Text(
+          endroit.nom,
+          style: TextStyle(color: Colors.black, fontSize: 20),
+        ),
+        backgroundColor: const Color(0xff76abbb),
+      ),
       body: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         child: Column(
@@ -40,9 +46,8 @@ class EndroitDetail extends StatelessWidget {
                             'assets/images/computer.jpg',
                             fit: BoxFit.cover,
                           ),
-                    SizedBox(height: 30),
-                    Text(endroit.nom, textAlign: TextAlign.center),
-                    SizedBox(height: 10),
+
+                    SizedBox(height: 50),
                     Text(endroit.description, textAlign: TextAlign.center),
                   ],
                 ),

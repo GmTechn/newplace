@@ -30,9 +30,9 @@ class _EndroitsListState extends ConsumerState<EndroitsList> {
                   key: Key(favoriteplace.id),
                   direction: DismissDirection.endToStart,
                   background: Container(
-                    color: Colors.redAccent,
+                    color: const Color.fromARGB(255, 208, 18, 18),
                     alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: const Icon(Icons.delete, color: Colors.white),
                   ),
                   onDismissed: (direction) {
@@ -40,8 +40,8 @@ class _EndroitsListState extends ConsumerState<EndroitsList> {
                     ref.read(endroitsprovider.notifier).removeAt(index);
                   },
                   child: Card(
-                    elevation: 5,
-                    shadowColor: const Color(0xff85c1d3),
+                    elevation: 10,
+                    shadowColor: Color.fromARGB(255, 135, 197, 216),
                     child: ListTile(
                       leading: CircleAvatar(
                         radius: 30,

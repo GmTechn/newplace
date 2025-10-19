@@ -53,6 +53,28 @@ class _ImagePriseState extends State<ImagePrise> {
     return Center(
       child: _photoselected == null
           ? TextButton.icon(
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                  Set<WidgetState> states,
+                ) {
+                  if (states.contains(WidgetState.hovered)) {
+                    // ignore: deprecated_member_use
+                    return Color.fromARGB(255, 107, 156, 169).withOpacity(0.5);
+
+                    //Glow on hover
+                  } else if (states.contains(WidgetState.pressed)) {
+                    return Color.fromARGB(255, 155, 213, 230); // Glow on press
+                  }
+                }),
+                // Overlay color for ripple effect
+                overlayColor: WidgetStateProperty.all(
+                  // ignore: deprecated_member_use
+                  Colors.white.withOpacity(0.3),
+                ),
+                // Elevation to enhance the glow effect
+                elevation: MaterialStateProperty.all(5),
+              ),
+
               icon: Icon(
                 CupertinoIcons.camera_fill,
                 size: 28,
