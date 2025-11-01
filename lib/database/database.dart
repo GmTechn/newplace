@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import '../modele/endroit.dart';
+import '../../modele/endroit.dart';
 
 class EndroitsDatabase {
   static final EndroitsDatabase instance = EndroitsDatabase._init();
