@@ -34,32 +34,26 @@ class _AjoutEndroitState extends ConsumerState<AjoutEndroit> {
   //enregistrer un endroit saved
 
   void _enregistreendroit() async {
-    final place = _placenameController.text.trim();
-    final description = _descriptionController.text.trim();
-
-    if (place.isEmpty || description.isEmpty) {
+    if (_placenameController.text.isEmpty ||
+        _descriptionController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill in all fields'),
-          backgroundColor: Color(0xff6896a4),
-        ),
+        const SnackBar(content: Text('Please fill in all fields.')),
       );
       return;
     }
 
-    // ✅ Create an Endroit object
     final newEndroit = Endroit(
-      id: DateTime.now().toString(), // temporary unique ID
-      nom: place,
-      description: description,
-      image: _imageSelected?.path, // can be null
+      id: DateTime.now().toString(),
+      nom: _placenameController.text.trim(),
+      description: _descriptionController.text.trim(),
+      image: _imageSelected?.path,
     );
 
-    // ✅ Add the object to the provider
-    ref.read(endroitsprovider.notifier).addEndroit(newEndroit);
+    await ref.read(endroitsprovider.notifier).addEndroit(newEndroit);
 
-    // ✅ Return to the previous screen
-    Navigator.pop(context);
+    if (mounted) {
+      Navigator.pop(context);
+    }
   }
 
   @override

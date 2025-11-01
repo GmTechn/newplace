@@ -35,10 +35,16 @@ class _EndroitsListState extends ConsumerState<EndroitsList> {
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: const Icon(Icons.delete, color: Colors.white),
                   ),
-                  onDismissed: (direction) {
-                    // remove the place from provider state
-                    ref.read(endroitsprovider.notifier).removeAt(index);
+                  onDismissed: (direction) async {
+                    await ref.read(endroitsprovider.notifier).removeAt(index);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('${endroits[index].nom} deleted.'),
+                        backgroundColor: const Color(0xff85c1d3),
+                      ),
+                    );
                   },
+
                   child: Card(
                     elevation: 10,
                     shadowColor: Color.fromARGB(255, 135, 197, 216),
