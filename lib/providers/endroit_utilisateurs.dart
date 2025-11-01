@@ -1,28 +1,35 @@
-import 'dart:io';
-import 'package:flutter_application_3/modele/endroit.dart';
+import 'package:flutter_application_3/database.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import '../modele/endroit.dart';
 
-class EndroitUtilisateurs extends StateNotifier<List<Endroit>> {
-  EndroitUtilisateurs() : super(const []);
-
-  void ajoutendroit(String name, String description, File? image) {
-    final newPlace = Endroit(
-      nom: name,
-      description: description,
-      image: image != null ? image.path : null,
-    );
-
-    state = [newPlace, ...state];
+class EndroitsNotifier extends StateNotifier<List<Endroit>> {
+  EndroitsNotifier() : super([]) {
+    _loadEndroits();
   }
 
-  void removeAt(int index) {
-    final updatedList = [...state];
-    updatedList.removeAt(index);
-    state = updatedList;
+  Future<void> _loadEndroits() async {
+    final data = await EndroitsDatabase.instance.fetchAllEndroits();
+    state = data;
+  }
+
+  Future<void> addEndroit(Endroit endroit) async {
+    await EndroitsDatabase.instance.insertEndroit(endroit);
+    state = [...state, endroit];
+  }
+
+  Future<void> removeAt(int index) async {
+    final id = state[index].id;
+    await EndroitsDatabase.instance.deleteEndroit(id);
+    state = [
+      for (int i = 0; i < state.length; i++)
+        if (i != index) state[i],
+    ];
   }
 }
 
-final endroitsprovider =
-    StateNotifierProvider<EndroitUtilisateurs, List<Endroit>>(
-      (ref) => EndroitUtilisateurs(),
-    );
+// ✅ Single consistent provider
+final endroitsprovider = StateNotifierProvider<EndroitsNotifier, List<Endroit>>(
+  (ref) {
+    return EndroitsNotifier();
+  },
+);

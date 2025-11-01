@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/modele/endroit.dart';
 
@@ -37,9 +35,11 @@ class EndroitDetail extends StatelessWidget {
                     endroit.image != null
                         ? ClipRRect(
                             borderRadius: BorderRadiusGeometry.circular(9),
-                            child: Image.file(
-                              File(endroit.image!),
-                              fit: BoxFit.cover,
+                            child: SizedBox(
+                              child: Image.file(
+                                File(endroit.image!),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           )
                         : Image.asset(

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/modele/endroit.dart';
 import 'package:flutter_application_3/providers/endroit_utilisateurs.dart';
 import 'package:flutter_application_3/widgets/imageprise.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,8 +14,8 @@ class AjoutEndroit extends ConsumerStatefulWidget {
 
 class _AjoutEndroitState extends ConsumerState<AjoutEndroit> {
   //place controller
-  TextEditingController _placenameController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _placenameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   //file to store image
   File? _imageSelected;
@@ -31,28 +32,33 @@ class _AjoutEndroitState extends ConsumerState<AjoutEndroit> {
   }
 
   //enregistrer un endroit saved
-  void _enregistreendroit() async {
-    //controllers to store place and description
-    final place = _placenameController.text;
-    final description = _descriptionController.text;
 
-    //please
-    if (place.isEmpty) {
+  void _enregistreendroit() async {
+    final place = _placenameController.text.trim();
+    final description = _descriptionController.text.trim();
+
+    if (place.isEmpty || description.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please enter a place'),
-          backgroundColor: Color.fromARGB(255, 78, 112, 122),
+        const SnackBar(
+          content: Text('Please fill in all fields'),
+          backgroundColor: Color(0xff6896a4),
         ),
       );
       return;
     }
 
-    //add place to provider
-    ref
-        .read(endroitsprovider.notifier)
-        .ajoutendroit(place, description, _imageSelected);
+    // ✅ Create an Endroit object
+    final newEndroit = Endroit(
+      id: DateTime.now().toString(), // temporary unique ID
+      nom: place,
+      description: description,
+      image: _imageSelected?.path, // can be null
+    );
 
-    //pop of context, go back to the display list
+    // ✅ Add the object to the provider
+    ref.read(endroitsprovider.notifier).addEndroit(newEndroit);
+
+    // ✅ Return to the previous screen
     Navigator.pop(context);
   }
 
@@ -76,7 +82,6 @@ class _AjoutEndroitState extends ConsumerState<AjoutEndroit> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -85,7 +90,7 @@ class _AjoutEndroitState extends ConsumerState<AjoutEndroit> {
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  height: 200,
+                  height: 250,
                   width: double.infinity,
                   child: ImagePrise(
                     onphotoselectionne: (File? image) {

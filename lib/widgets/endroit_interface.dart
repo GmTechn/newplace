@@ -11,7 +11,7 @@ class EndroitsInterface extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //endroit utilisateur reading from provider
-    final _endroitsutilisateur = ref.watch(endroitsprovider);
+    final endroitsutilisateur = ref.watch(endroitsprovider);
 
     return Scaffold(
       //---APPBAR----//
@@ -26,7 +26,7 @@ class EndroitsInterface extends ConsumerWidget {
       //----BODY----//
       body: Padding(
         padding: EdgeInsets.all(10),
-        child: EndroitsList(endroits: _endroitsutilisateur),
+        child: EndroitsList(endroits: endroitsutilisateur),
       ),
 
       //----BOTTOM---///
